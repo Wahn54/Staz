@@ -1,0 +1,50 @@
+body {
+  background-color: #333;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  color: rgb(249, 207, 207);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+li {
+  list-style-type: none;
+  border: solid 2px #000;
+  position: relative;
+  margin: 10px;
+  width: 600px;
+  line-height: 1.5;
+  text-align: center;
+  background-color: rgb(120, 78, 78); 
+  border-radius: 5%;
+}
+.siema{
+  display: grid;
+  grid-template-columns: 1fr  1fr; 
+}
+.loader{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0%;
+  padding-left: 36px;
+}
+.div1 {
+  width: 600px;
+  height: 130px;
+  margin: 10px;
+  opacity: 0.8;
+  border-radius: 5%;
+  animation-name: slide;
+  animation-duration: 4s;
+}
+@keyframes slide {
+  0% {
+    background-color: hsl(200, 9%, 75%);
+  }
+
+  100% {
+    background-color: hsl(0, 16%, 28%);
+  }
+}
+
