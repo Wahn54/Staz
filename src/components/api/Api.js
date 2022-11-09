@@ -1,22 +1,44 @@
 import { useEffect, useState, } from "react";
 import './/style.css';
+import useFilter from "../../hooks/useFilter";
 function Api() {
   const chunkSize = 10;
-  const [data, setData] = useState([]);
   const [pages, setPages] = useState([]);
+  const { filter, setFilter, filteredData, setData} = useFilter();
+  const [loading, setLoading] = useState(true);
+
+  const handleInputChange = (e) => {
+    setFilter(e.target.value)
+  }
   useEffect(() => {
     const result = [];
-    for(let i = 0; i < data.length; i += chunkSize){
-        result.push(data.slice(i, i + chunkSize));
+    for(let i = 0; i < filteredData.length; i += chunkSize){
+        result.push(filteredData.slice(i, i + chunkSize));
     }
-    console.log(result);
     setPages(result);
-  }, [data])
+  }, [filteredData])
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.json())
-      .then((json) => setTimeout(() => setData(json),4000));
-  }, []);
+      let timeout
+      const getData = async () => {
+        try{
+          const response = await fetch("https://jsonplaceholder.typicode.com/posts")
+          const data = await response.json()
+          timeout = setTimeout(() => {
+            setData(data)
+          }
+          , 4000)
+          setData(data)
+        }
+        catch(error){
+          console.error(error)
+        }
+      }
+      getData()
+      return() => clearTimeout(timeout)
+  }, [setData]);
+  useEffect(() =>{
+    if(pages.length) setLoading(false)
+  }, [pages])
   const [currentPage, setCurrentPage] = useState(0);
   const handlePrevPage = () => {
     if(currentPage === 0) return; 
@@ -26,7 +48,7 @@ function Api() {
     if(currentPage === pages.length - 1) return; 
     setCurrentPage(prev => prev + 1);
   }
-  if(pages.length === 0) {
+  if(loading) {
     return (
       <div>
       <h1>Loading...</h1>
@@ -53,7 +75,7 @@ function Api() {
                   </svg>
                 </button>
                   <div>
-                    <input type="search" id="search" placeholder="Search..."/>
+                    <input type="search" id="source" placeholder="Search..." value={filter} onChange={handleInputChange}/>
                   </div>
                 <button  onClick={handleNextPage} type='button'>
                   <svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -62,9 +84,9 @@ function Api() {
                   </svg>
                 </button>
               </>
-  
+                
                 <ul className="siema">
-                    {pages[currentPage].map((post) => (
+                    {pages.length && pages[currentPage].map((post) => (
                     <li key={post.id}>`${post.title} ${post.id} ${post.body}`</li>
                     ))}
                 </ul>
