@@ -86,7 +86,7 @@ function Api() {
               </>
                 <ul className="siema">
                     {pages.length && pages[currentPage].map((post) => (
-                    <li key={post.id}>`${post.title} ${post.id} ${post.body}`</li>
+                    <li key={post.id}>`${post.title} ${post.body}`</li>
                     ))}
                 </ul>
         </div>
