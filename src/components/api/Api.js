@@ -1,10 +1,6 @@
 import { useEffect, useState, } from "react";
 import './/style.css';
-<<<<<<< HEAD
 import useFilter from "../hooks/useFilter";
-=======
-import useFilter from "../../hooks/useFilter";
->>>>>>> d1a6934c5de6b06d1a4222a367201b9fd3323b37
 function Api() {
   const chunkSize = 10;
   const [pages, setPages] = useState([]);
@@ -88,16 +84,9 @@ function Api() {
                   </svg>
                 </button>
               </>
-<<<<<<< HEAD
-                <ul className="siema">
-                    {pages.length && pages[currentPage].map((post) => (
-                    <li key={post.id}>`${post.title} ${post.body}`</li>
-=======
-                
                 <ul className="siema">
                     {pages.length && pages[currentPage].map((post) => (
                     <li key={post.id}>`${post.title} ${post.id} ${post.body}`</li>
->>>>>>> d1a6934c5de6b06d1a4222a367201b9fd3323b37
                     ))}
                 </ul>
         </div>
